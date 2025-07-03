@@ -1,7 +1,8 @@
+// js/script.js
 document.addEventListener('DOMContentLoaded', function() {
-    // Constants
-    const API_KEY = "ob355426c418b3a40180cfef0tb03253";
-    
+    // Set current year in footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
     // DOM Elements
     const generateBtn = document.getElementById('generate-btn');
     const clearBtn = document.getElementById('clear-btn');
@@ -9,130 +10,131 @@ document.addEventListener('DOMContentLoaded', function() {
     const speakBtn = document.getElementById('speak-btn');
     const userInput = document.getElementById('user-input');
     const aiOutput = document.getElementById('ai-output');
-    const modeSwitch = document.getElementById('mode-switch');
-    const modeLabel = document.getElementById('mode-label');
 
-    // State
-    let currentMode = 'translate'; // 'translate' or 'poem'
-
-    // Initialize
-    document.getElementById('current-year').textContent = new Date().getFullYear();
-
-    // Mode Switching
-    modeSwitch.addEventListener('change', function() {
-        currentMode = this.checked ? 'poem' : 'translate';
-        modeLabel.textContent = this.checked ? 'Poem Mode' : 'Translate Mode';
-        userInput.placeholder = this.checked 
-            ? 'Enter a topic (e.g. Flower, Love)' 
-            : 'Enter English text to translate';
-    });
-
-    // Generate Functionality
+    // Generate AI Response (Mock Function - Replace with actual API call)
     generateBtn.addEventListener('click', async function() {
         const text = userInput.value.trim();
         
         if (!text) {
-            showMessage('Please enter some text', 'error');
+            showMessage('Please enter some text to generate isiZulu content', 'error');
             return;
         }
 
+        showMessage('Generating...', 'status');
+        
+        // Simulate API call delay
         generateBtn.disabled = true;
         generateBtn.textContent = 'Generating...';
-        aiOutput.innerHTML = '<p class="status-message">Generating content...</p>';
-
+        
         try {
-            let response;
-            if (currentMode === 'translate') {
-                response = await generateTranslation(text);
-            } else {
-                response = await generatePoem(text);
-            }
-            displayResponse(response);
+            // In a real implementation, you would call your AI API here
+            // const response = await fetchYourAIAPI(text);
+            const mockResponse = generateMockResponse(text);
+            
+            setTimeout(() => {
+                displayResponse(mockResponse);
+                generateBtn.disabled = false;
+                generateBtn.textContent = 'Generate';
+            }, 1500);
+            
         } catch (error) {
-            showMessage('Error generating content', 'error');
-            console.error('Generation error:', error);
-        } finally {
+            showMessage('Error generating content. Please try again.', 'error');
             generateBtn.disabled = false;
             generateBtn.textContent = 'Generate';
+            console.error('Generation error:', error);
         }
     });
-
-    // API Functions
-    async function generateTranslation(text) {
-        const prompt = `Translate this to isiZulu: "${text}". Provide only the Zulu translation.`;
-        const apiUrl = `https://api.shecodes.io/ai/v1/generate?prompt=${encodeURIComponent(prompt)}&key=${API_KEY}`;
-        
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        
-        return {
-            type: 'translation',
-            original: text,
-            zulu: data.answer,
-            note: 'AI-generated translation'
-        };
-    }
-
-    async function generatePoem(topic) {
-        const prompt = `Create a 4-line isiZulu poem about ${topic}. 
-        Use traditional Zulu poetic style with nature imagery. 
-        Provide ONLY the poem in isiZulu.`;
-        
-        const response = await fetch(
-            `https://api.shecodes.io/ai/v1/generate?prompt=${encodeURIComponent(prompt)}&key=${API_KEY}`
-        );
-        const data = await response.json();
-        
-        return {
-            type: 'poem',
-            topic: topic,
-            content: data.answer,
-            note: 'AI-generated poem'
-        };
-    }
-
-    // Display Functions
-    function displayResponse(response) {
-        if (response.type === 'translation') {
-            aiOutput.innerHTML = `
-                <div class="translation-result">
-                    <h3>Translation Result</h3>
-                    <p><strong>Original:</strong> ${response.original}</p>
-                    <p><strong>isiZulu:</strong> ${response.zulu}</p>
-                    ${response.note ? `<p class="note">${response.note}</p>` : ''}
-                </div>
-            `;
-        } else {
-            aiOutput.innerHTML = `
-                <div class="poem-result">
-                    <h3>${response.topic}</h3>
-                    <div class="poem">
-                        ${response.content.split('\n').map(line => `<p>${line}</p>`).join('')}
-                    </div>
-                    <p class="signature">SheCodes AI</p>
-                </div>
-            `;
-        }
-    }
-
-    // Existing Helper Functions (keep these unchanged)
-    function showMessage(message, type) {
-        // ... (your existing showMessage implementation)
-    }
 
     // Clear all fields
     clearBtn.addEventListener('click', function() {
         userInput.value = '';
-        aiOutput.innerHTML = '<p class="placeholder-text">Your generated content will appear here...</p>';
+        aiOutput.innerHTML = '<p class="placeholder-text">Your generated isiZulu content will appear here...</p>';
     });
 
     // Copy text to clipboard
     copyBtn.addEventListener('click', function() {
-        // ... (your existing copy functionality)
+        const textToCopy = aiOutput.innerText;
+        
+        if (!textToCopy || aiOutput.querySelector('.placeholder-text')) {
+            showMessage('Nothing to copy', 'error');
+            return;
+        }
+
+        navigator.clipboard.writeText(textToCopy)
+            .then(() => showMessage('Copied to clipboard!', 'success'))
+            .catch(err => {
+                showMessage('Failed to copy text', 'error');
+                console.error('Copy error:', err);
+            });
     });
 
     // Text-to-speech functionality
     speakBtn.addEventListener('click', function() {
-        // ... (your existing TTS functionality)
+        const textToSpeak = aiOutput.innerText;
+        
+        if (!textToSpeak || aiOutput.querySelector('.placeholder-text')) {
+            showMessage('Nothing to read', 'error');
+            return;
+        }
+
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.lang = 'zu'; // isiZulu language code
+            utterance.rate = 0.9;
+            speechSynthesis.speak(utterance);
+        } else {
+            showMessage('Text-to-speech not supported in your browser', 'error');
+        }
     });
+
+    // Helper Functions
+    function displayResponse(response) {
+        aiOutput.innerHTML = `
+            <div class="ai-response">
+                <h3>Generated isiZulu:</h3>
+                <p>${response.zulu}</p>
+                <div class="cultural-divider" style="margin: 1rem 0; width: 50%;"></div>
+                <h3>English Translation:</h3>
+                <p>${response.english}</p>
+                ${response.note ? `<div class="ai-note"><strong>Note:</strong> ${response.note}</div>` : ''}
+            </div>
+        `;
+    }
+
+    function showMessage(message, type) {
+        const messageEl = document.createElement('div');
+        messageEl.className = `message ${type}`;
+        messageEl.textContent = message;
+        
+        document.body.appendChild(messageEl);
+        
+        setTimeout(() => {
+            messageEl.classList.add('fade-out');
+            setTimeout(() => messageEl.remove(), 500);
+        }, 3000);
+    }
+
+    function generateMockResponse(input) {
+        const responses = [
+            {
+                zulu: "Sawubona! Ngingakusiza ngani namuhla?",
+                english: "Hello! How can I help you today?",
+                note: "Common isiZulu greeting"
+            },
+            {
+                zulu: "Inkanyezi yesiZulu ikhanya kakhulu namuhla.",
+                english: "The Zulu star shines brightly today.",
+                note: "Poetic expression"
+            },
+            {
+                zulu: "Ungakwazi ukufunda isiZulu ngokuzikhandla.",
+                english: "You can learn isiZulu with dedication.",
+                note: "Encouraging phrase"
+            }
+        ];
+        
+        // Simple mock response based on input length
+        const randomIndex = input.length % responses.length;
+        return responses[randomIndex];
+    }
 });
