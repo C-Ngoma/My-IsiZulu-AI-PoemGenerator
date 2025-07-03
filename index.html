@@ -1,50 +1,51 @@
 <!DOCTYPE html>
-<html lang="zu">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I-AI Yakho Yokukhiqiza IsiZulu | Your isiZulu AI Generator</title>
+    <title>ZuluGen AI - Advanced IsiZulu Language Generator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>I-AI Yakho Yokukhiqiza IsiZulu</h1>
-            <p class="subtitle">Yenza izinto ngesiZulu ngosizo lwe-AI</p>
+            <h1>ZuluGen AI</h1>
+            <p class="subtitle">Generate, translate and enhance isiZulu content with AI</p>
         </div>
     </header>
     
-    <div class="zulu-pattern"></div>
+    <div class="cultural-divider"></div>
     
     <div class="container">
         <main class="main-content">
             <section class="input-section">
-                <h2>Faka umbuzo wakho</h2>
-                <textarea id="user-input" placeholder="Bhala lapha umbuzo wakho noma isicelo..."></textarea>
+                <h2>Your Input</h2>
+                <textarea id="user-input" placeholder="Enter your English or isiZulu text here..."></textarea>
                 <div class="button-group">
-                    <button class="btn" id="generate-btn">Khiqiza</button>
-                    <button class="btn" id="clear-btn">Sula</button>
+                    <button class="btn primary-btn" id="generate-btn">Generate</button>
+                    <button class="btn secondary-btn" id="clear-btn">Clear</button>
                 </div>
             </section>
             
             <section class="output-section">
-                <h2>Impendulo yakho</h2>
+                <h2>AI Output</h2>
                 <div id="ai-output">
-                    <p class="placeholder-text">Impendulo ye-AI izovelela lapha...</p>
+                    <p class="placeholder-text">Your generated isiZulu content will appear here...</p>
                 </div>
                 <div class="button-group right-align">
-                    <button class="btn" id="copy-btn">Kopisha</button>
+                    <button class="btn tertiary-btn" id="copy-btn">Copy Text</button>
+                    <button class="btn accent-btn" id="speak-btn">Read Aloud</button>
                 </div>
             </section>
         </main>
     </div>
     
-    <div class="zulu-pattern"></div>
+    <div class="cultural-divider"></div>
     
     <footer>
         <div class="container">
-            <p>© 2023 I-AI Yakho Yokukhiqiza IsiZulu. Wonke amalungelo agodliwe.</p>
-            <p>Ithimba lethu lingatholakala ku-<a href="https://github.com/yourusername/isizulu-ai-generator">GitHub</a>.</p>
+            <p>© <span id="current-year"></span> ZuluGen AI. All rights reserved.</p>
+            <p>View project on <a href="https://github.com/yourusername/zulugen-ai" target="_blank">GitHub</a></p>
         </div>
     </footer>
     
