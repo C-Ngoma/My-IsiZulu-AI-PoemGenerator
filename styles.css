@@ -1,0 +1,192 @@
+/* css/styles.css */
+:root {
+  /* Gradient color palette inspired by BalthStudio */
+  --gradient-primary: linear-gradient(135deg, #6e00ff 0%, #ff00f5 50%, #ff8a00 100%);
+  --gradient-secondary: linear-gradient(135deg, #001aff 0%, #00f0ff 100%);
+  --gradient-dark: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  --text-light: rgba(255, 255, 255, 0.9);
+  --text-muted: rgba(255, 255, 255, 0.6);
+}
+
+/* Base Styles */
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  background: var(--gradient-dark);
+  color: var(--text-light);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Header Styles */
+header {
+  padding: 4rem 0 2rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  margin: 0;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.05em;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+/* Cultural Divider - Gradient Version */
+.cultural-divider {
+  height: 4px;
+  background: var(--gradient-primary);
+  margin: 2rem 0;
+  border-radius: 2px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Input/Output Sections */
+.main-content {
+  display: grid;
+  gap: 3rem;
+  margin: 3rem 0;
+}
+
+.input-section, .output-section {
+  background: rgba(30, 30, 60, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: white;
+}
+
+textarea {
+  width: 100%;
+  min-height: 200px;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+/* Button Styles */
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  padding: 0.8rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.primary-btn {
+  background: var(--gradient-primary);
+  color: white;
+}
+
+.secondary-btn {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.tertiary-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.accent-btn {
+  background: var(--gradient-secondary);
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.right-align {
+  justify-content: flex-end;
+}
+
+/* Output Section */
+#ai-output {
+  min-height: 200px;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+.placeholder-text {
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 3rem 0;
+  color: var(--text-muted);
+}
+
+footer a {
+  color: white;
+  background: var(--gradient-secondary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  .container {
+    padding: 0 1.5rem;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .right-align {
+    justify-content: flex-start;
+  }
+}
